@@ -34,8 +34,8 @@ angular.module('photo-push', [
   })
 
   .controller('photoCtrl', ['$scope', '$pusher', function($scope, $pusher) {
-    $scope.message = 'World';
-    $scope.image_src = 'http://lorempixel.com/400/400/';
+    $scope.message = '';
+    $scope.image_src = 'http://lorempixel.com/1900/1100/';
 
     var client = new Pusher('361a1976618931c8ef0d', { authEndpoint: 'http://six-gs.com/pusher.yanniboi.com/public_html/index.php' });
     var pusher = $pusher(client);
