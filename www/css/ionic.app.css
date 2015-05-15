@@ -7674,3 +7674,19 @@ a.button {
   opacity: 0;
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
+
+.fade {
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  -moz-transition: opacity 2s ease-in-out;
+  -webkit-transition: opacity 2s ease-in-out; }
+
+.fade-show {
+  opacity: 1; }
+
+.loading-container .loading {
+  width: 50%;
+  font-size: 50px;
+  height: 100px;
+  line-height: 100px;
+  padding: 0; }

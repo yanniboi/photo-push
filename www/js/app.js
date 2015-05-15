@@ -5,6 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('photo-push', [
   'ionic',
+  'photo-push.services',
   'pusher-angular'
 ])
 
@@ -33,9 +34,16 @@ angular.module('photo-push', [
     $urlRouterProvider.otherwise('/');
   })
 
-  .controller('photoCtrl', ['$scope', '$pusher', function($scope, $pusher) {
+  .controller('photoCtrl', ['$scope', '$rootScope', '$timeout', '$pusher', 'Utils', function($scope, $rootScope, $timeout, $pusher, Utils) {
     $scope.message = '';
     $scope.image_src = 'http://lorempixel.com/1900/1100/';
+    $scope.image_classes = 'fade';
+
+    $scope.great = 'fantastic';
+
+    $timeout(function () {
+      $scope.image_classes = 'fade fade-show';
+    }, 1000);
 
     var client = new Pusher('361a1976618931c8ef0d', { authEndpoint: 'http://six-gs.com/pusher.yanniboi.com/public_html/index.php' });
     var pusher = $pusher(client);
@@ -45,8 +53,29 @@ angular.module('photo-push', [
     my_channel.bind('client-new-price', function(data) {
       console.log(data);
 
-      $scope.image_src = data.source;
-      // update with new price
+      if (data.hasOwnProperty('type')) {
+        switch(data.type) {
+        case 'image-update':
+          $scope.image_classes = 'fade';
+          $scope.image_src = data.source;
+          $scope.image_classes = 'fade fade-show';
+
+          break;
+        case 'message':
+          $rootScope.notify(data.message);
+
+          break;
+          case 'countdown':
+            $rootScope.countdown(5);
+
+            break;
+        default:
+            console.log('Unknown message of type: ' + data.type);
+        }
+      }
+      else {
+        $rootScope.notify('Bad request received.');
+      }
     });
 
   }]);
