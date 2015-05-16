@@ -36,13 +36,14 @@ angular.module('photo-push', [
 
   .controller('photoCtrl', ['$scope', '$rootScope', '$timeout', '$pusher', 'Utils', function($scope, $rootScope, $timeout, $pusher, Utils) {
     $scope.message = '';
-    $scope.image_src = 'http://lorempixel.com/1900/1100/';
-    $scope.image_classes = 'fade';
-
-    $scope.great = 'fantastic';
+    $scope.image_p_src = 'http://lorempixel.com/1900/1100/';
+    $scope.image_s_src = '';
+    $scope.image_p_classes = 'fade';
+    $scope.image_s_classes = 'fade';
+    $scope.show_primary = true;
 
     $timeout(function () {
-      $scope.image_classes = 'fade fade-show';
+      $scope.image_p_classes = 'fade fade-show';
     }, 1000);
 
     var client = new Pusher('361a1976618931c8ef0d', { authEndpoint: 'http://six-gs.com/pusher.yanniboi.com/public_html/index.php' });
@@ -56,13 +57,23 @@ angular.module('photo-push', [
       if (data.hasOwnProperty('type')) {
         switch(data.type) {
         case 'image-update':
-          $scope.image_classes = 'fade';
-          $timeout(function () {
-            $scope.image_src = data.source;
-            $scope.image_classes = 'fade fade-show';
-          }, 1600);
-
-
+          if ($scope.show_primary) {
+            $scope.image_p_classes = 'fade';
+            $scope.image_s_src = data.source;
+            $timeout(function () {
+              $scope.show_primary = false;              
+              $scope.image_s_classes = 'fade fade-show';
+            }, 1600);
+          }
+          else {
+            $scope.image_s_classes = 'fade';
+            $scope.image_p_src = data.source;
+            $timeout(function () {
+              $scope.show_primary = true;
+              $scope.image_p_classes = 'fade fade-show';
+            }, 1600);
+          }
+      
           break;
         case 'message':
           $rootScope.notify(data.message);
