@@ -57,8 +57,11 @@ angular.module('photo-push', [
         switch(data.type) {
         case 'image-update':
           $scope.image_classes = 'fade';
-          $scope.image_src = data.source;
-          $scope.image_classes = 'fade fade-show';
+          $timeout(function () {
+            $scope.image_src = data.source;
+            $scope.image_classes = 'fade fade-show';
+          }, 1600);
+
 
           break;
         case 'message':
