@@ -34,14 +34,33 @@ angular.module('photo-push', [
     $urlRouterProvider.otherwise('/');
   })
 
-  .controller('photoCtrl', ['$scope', '$rootScope', '$timeout', '$pusher', 'Utils', function($scope, $rootScope, $timeout, $pusher, Utils) {
+  .controller('photoCtrl', ['$scope', '$rootScope', '$timeout', '$pusher', 'Utils', 'CameraUtils',  function($scope, $rootScope, $timeout, $pusher, Utils, CameraUtils) {
     $scope.message = '';
     $scope.image_p_src = 'http://lorempixel.com/1900/1100/';
     $scope.image_s_src = '';
     $scope.image_p_classes = 'fade';
     $scope.image_s_classes = 'fade';
     $scope.show_primary = true;
+      
+    $scope.camera = $rootScope.camera.init();
+      
+    $scope.$watch('camera', function() {
+      if ($scope.camera.hasOwnProperty('status') && $scope.camera.status == 'active') {
+        $scope.camera_connected = true;
+      }
+        else {
+          $scope.camera_connected = false;
+        }
+    })
 
+    
+    $timeout(function () {
+      var path = $rootScope.camera.capture();
+        
+      console.log('got path');
+      console.log(path);
+    }, 4000);
+    
     $timeout(function () {
       $scope.image_p_classes = 'fade fade-show';
     }, 1000);
