@@ -4,11 +4,11 @@
     <div>
       <h2 class="text-center">{{message}}</h2>
       <!--<div class="button  button-block button-positive" ng-click="click()">Test</div>-->
-      <div ng-show="show_primary" class="primary">
-        <img class="{{image_p_classes}}" style="display:block;margin:auto;max-width: 100%" ng-src="{{image_p_src}}"  />      
+      <div ng-show="image_switch.show_primary" class="primary">
+        <img class="{{image_switch.image_p_classes}}" style="display:block;margin:auto;max-width: 100%" ng-src="{{image_switch.image_p_src}}"  />
       </div>
-      <div ng-show="!show_primary" class="secondary">
-        <img class="{{image_s_classes}}" style="display:block;margin:auto;max-width: 100%" ng-src="{{image_s_src}}"  />      
+      <div ng-show="!image_switch.show_primary" class="secondary">
+        <img class="{{image_switch.image_s_classes}}" style="display:block;margin:auto;max-width: 100%" ng-src="{{image_switch.image_s_src}}"  />
       </div>
 
     </div>
