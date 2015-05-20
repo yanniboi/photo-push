@@ -24,7 +24,8 @@ try{
 	switch($action){
 
 		case "takePicture":
-			exec ("gphoto2 --capture-image-and-download --filename \"./images/capture-%Y%m%d-%H%M%S-%03n.%C\"",$output);
+                        $file = $_GET['file'];
+			exec ("env LANG=C gphoto2 --debug --debug-logfile=my-logfile.txt --capture-image-and-download --filename \"./images/" . $file . "\"",$output);
 			echo json_encode(true);					
 			break;
 
