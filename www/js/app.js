@@ -34,6 +34,15 @@ angular.module('photo-push', [
     $urlRouterProvider.otherwise('/');
   })
 
+  .controller('globalCtrl', ['$scope', '$rootScope', '$timeout', '$pusher', 'Utils',  function($scope, $rootScope, $timeout, $pusher, Utils ) {
+    $scope.trigger = function (e) {
+      console.log(e.keyCode);
+      if (e.keyCode == 13 || e.keyCode == 32) {
+        $rootScope.countdown(5);
+      }
+    };
+  }])
+
   .controller('photoCtrl', ['$scope', '$rootScope', '$timeout', '$pusher', 'Utils',  function($scope, $rootScope, $timeout, $pusher, Utils ) {
     $scope.message = '';
     $scope.image_switch = $rootScope.image_switch = {};
